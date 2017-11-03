@@ -1,5 +1,4 @@
 from conans import ConanFile, tools, AutoToolsBuildEnvironment
-# import shutil
 import os
 
 class Libxml2Conan(ConanFile):
@@ -14,8 +13,7 @@ class Libxml2Conan(ConanFile):
 
     def source(self):
         tools.get('http://xmlsoft.org/sources/libxml2-sources-%s.tar.gz' % self.version,
-                  # sha256='df08982aad4c9d98ac8b064add327b23eaeba3e3ca4be311bd58985760bb6cb0'
-                  )
+                  sha256='df08982aad4c9d98ac8b064add327b23eaeba3e3ca4be311bd58985760bb6cb0')
 
     def build(self):
         tools.mkdir(self.build_dir)
