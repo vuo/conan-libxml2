@@ -3,16 +3,20 @@ import os
 
 class Libxml2Conan(ConanFile):
     name = 'libxml2'
-    version = '2.9.2'
+
+    source_version = '2.9.2'
+    package_version = '2'
+    version = '%s-%s' % (source_version, package_version)
+
     settings = 'os', 'compiler', 'build_type', 'arch'
     url = 'https://github.com/vuo/conan-libxml2'
     license = 'http://xmlsoft.org/FAQ.html#License'
     description = 'A library for reading and writing XML'
-    source_dir = 'libxml2-%s' % version
+    source_dir = 'libxml2-%s' % source_version
     build_dir = '_build'
 
     def source(self):
-        tools.get('http://xmlsoft.org/sources/libxml2-sources-%s.tar.gz' % self.version,
+        tools.get('http://xmlsoft.org/sources/libxml2-sources-%s.tar.gz' % self.source_version,
                   sha256='df08982aad4c9d98ac8b064add327b23eaeba3e3ca4be311bd58985760bb6cb0')
 
     def build(self):
@@ -20,7 +24,7 @@ class Libxml2Conan(ConanFile):
         with tools.chdir(self.build_dir):
             autotools = AutoToolsBuildEnvironment(self)
             autotools.cxx_flags.append('-Oz')
-            autotools.cxx_flags.append('-mmacosx-version-min=10.8')
+            autotools.cxx_flags.append('-mmacosx-version-min=10.10')
             autotools.link_flags.append('-Wl,-install_name,@rpath/libxml2.dylib')
             autotools.configure(configure_dir='../%s' % self.source_dir,
                                 args=['--quiet',
