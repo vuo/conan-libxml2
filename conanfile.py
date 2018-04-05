@@ -23,8 +23,8 @@ class Libxml2Conan(ConanFile):
         tools.mkdir(self.build_dir)
         with tools.chdir(self.build_dir):
             autotools = AutoToolsBuildEnvironment(self)
-            autotools.cxx_flags.append('-Oz')
-            autotools.cxx_flags.append('-mmacosx-version-min=10.10')
+            autotools.flags.append('-Oz')
+            autotools.flags.append('-mmacosx-version-min=10.10')
             autotools.link_flags.append('-Wl,-install_name,@rpath/libxml2.dylib')
             autotools.configure(configure_dir='../%s' % self.source_dir,
                                 args=['--quiet',
