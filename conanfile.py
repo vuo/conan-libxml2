@@ -19,6 +19,8 @@ class Libxml2Conan(ConanFile):
         tools.get('http://xmlsoft.org/sources/libxml2-sources-%s.tar.gz' % self.source_version,
                   sha256='df08982aad4c9d98ac8b064add327b23eaeba3e3ca4be311bd58985760bb6cb0')
 
+        self.run('mv %s/Copyright %s/%s.txt' % (self.source_dir, self.source_dir, self.name))
+
     def build(self):
         tools.mkdir(self.build_dir)
         with tools.chdir(self.build_dir):
@@ -58,6 +60,8 @@ class Libxml2Conan(ConanFile):
     def package(self):
         self.copy('*.h', src='%s/include/libxml2' % self.build_dir, dst='include')
         self.copy('libxml2.dylib', src='%s/lib' % self.build_dir, dst='lib')
+
+        self.copy('%s.txt' % self.name, src=self.source_dir, dst='license')
 
     def package_info(self):
         self.cpp_info.libs = ['xml2']
